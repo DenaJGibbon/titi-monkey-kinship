@@ -276,10 +276,10 @@ allpulsemodel_draws$feature <- dplyr::recode_factor(allpulsemodel_draws$feature,
                                                     'b_weight_kg'='Weight (kg)')
 
 
-allpulsemodel_draws %>%
+pulse.coef.plot <- allpulsemodel_draws %>%
   ggplot(aes( x = measurement, y=feature, fill=feature.category)) +
   scale_fill_manual(values=cbbPalette[1:4])+
-  stat_halfeye(.width = c(.90, .5))+
+  stat_halfeye(.width = c(.90, .5), alpha = 0.65)+
   geom_vline(xintercept=0,linetype = "dashed")+
   facet_wrap(~feature.category,scales ='free',labeller = as_labeller(feature.names))+
   theme(legend.position = "none")+xlab('Estimates')+ylab('Predictor')

@@ -378,10 +378,19 @@ allchirpmodel_draws$feature <- dplyr::recode_factor(allchirpmodel_draws$feature,
                                                     'b_weight_kg'='Weight (kg)')
 
                      
-allchirpmodel_draws %>%
+chirp.coef.plot <- allchirpmodel_draws %>%
   ggplot(aes( x = measurement, y=feature, fill=feature.category)) +
   scale_fill_manual(values=cbbPalette[1:4])+
-  stat_halfeye(.width = c(.90, .5))+
+  stat_halfeye(.width = c(.90, .5), alpha = 0.65)+
   geom_vline(xintercept=0,linetype = "dashed")+
   facet_wrap(~feature.category,scales ='free',labeller = as_labeller(feature.names))+
   theme(legend.position = "none")+xlab('Estimates')+ylab('Predictor')
+
+cowplot::plot_grid(NULL,pulse.coef.plot,NULL,chirp.coef.plot,nrow=4,rel_heights = c(0.05,.4,0.05,.4),
+                   label_x = 0,
+                   label_y = 1.1,
+                   labels = c('','A. Pulse coeffcients','','B. Chirp coeffcients'))
+
+
+
+
